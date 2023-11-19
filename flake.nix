@@ -69,13 +69,13 @@
             sha256 = "sha256-YnBsBrxb45qnolMa+AJCBCm2xMR0mO69JSGvfpiNCEg=";
           };
 
-          headers = pkgs.fetchurl {
-            # version 6124 should match content of get-binaries.patch
-            # this used to point to https://pdfium.googlesource.com/pdfium/+archive/refs/heads/chromium/6124/public.tar.gz
-            # but that hash keeps changing, commit 7233 was taken from this page https://pdfium.googlesource.com/pdfium/+/refs/heads/chromium/6124
-            url =
-              "https://pdfium.googlesource.com/pdfium/+archive/7233e99fcaeb18adbf048be2df0b1cca355abc70/public.tar.gz";
-            sha256 = "sha256-920OK/8UXrwwlf+FBrIKdTl3Q35W1li/BEpGknbtRlU=";
+          headers = pkgs.fetchgit {
+            url = "https://pdfium.googlesource.com/pdfium.git";
+            rev = "7233e99fcaeb18adbf048be2df0b1cca355abc70";
+            sha256 = "sha256-agEO4WSg/J72k96ZWNbHuceJwrhjnBPCz3s2bUlDpyg=";
+            sparseCheckout = [
+              "public"
+            ];
           };
 
           binaries = pkgs.fetchurl {
@@ -89,7 +89,7 @@
 
           postPatch = ''
             mkdir -p data/bindings/headers
-            tar -xzf ${headers} -C data/bindings/headers
+            cp -r ${headers}/public/* data/bindings/headers/
             mkdir -p data/linux_x64
             cp ${binaries} data/linux_x64/pdfium-linux-x64.tgz
             cp ${binaries} pdfium-linux-x64.tgz
