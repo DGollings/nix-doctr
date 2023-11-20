@@ -69,13 +69,9 @@
             sha256 = "sha256-YnBsBrxb45qnolMa+AJCBCm2xMR0mO69JSGvfpiNCEg=";
           };
 
-          headers = pkgs.fetchgit {
+          headers = builtins.fetchGit {
             url = "https://pdfium.googlesource.com/pdfium.git";
             rev = "7233e99fcaeb18adbf048be2df0b1cca355abc70";
-            sha256 = "sha256-agEO4WSg/J72k96ZWNbHuceJwrhjnBPCz3s2bUlDpyg=";
-            sparseCheckout = [
-              "public"
-            ];
           };
 
           binaries = pkgs.fetchurl {
